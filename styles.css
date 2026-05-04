@@ -1,28 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Baloo+2:wght@400;600&display=swap");
+
+:root {
+  --font-titulo: "Montserrat", sans-serif;
+  --font-dialogo: "Baloo 2", cursive;
+  --text-color: #fff;
+  --text-dialog-color: #333;
+}
+
 body {
-    height: 100vh;
-    margin: 0;
+  height: 100vh;
+  font-family: var(--font-titulo);
+  color: var(--text-color);
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .background {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("./assets/images/fundo.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-direction: column;
+}
+
+img.professora-imagem {
+  position: absolute;
+  max-height: 90vh;
+  height: auto;
+  top: 30%;
+  left: 5%;
+}
+
+.caixa-pergunta {
+  background: var(--text-color);
+  color: var(--text-dialog-color);
+  border-radius: 20px;
+  padding: 20px;
+  width: 60%;
+  max-width: 600px;
+  border: 3px solid #333;
+  box-shadow: 0 6px 0 #333;
+  font-family: var(--font-dialogo);
+  font-weight: 600;
+  text-align: center;
+  position: absolute;
+  bottom: 65%;
+}
+
+.caixa-pergunta h2 {
+  font-family: var(--font-titulo);
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.caixa-pergunta p {
+  font-size: 1.1rem;
+}
+
+.caixa-pergunta::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 40px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #f4f4f0 transparent transparent transparent;
+}
+
+.caixa-opcoes {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+}
+
+.caixa-opcoes button {
+  width: 100%;
+  max-width: 400px;
+  background: #f4f4f0;
+  border: 3px solid #333;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: var(--font-dialogo);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 #333;
+  transition: all 0.15s ease;
+}
+
+.caixa-opcoes button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #333;
+  background: #eaeae0;
+}
+
+.caixa-opcoes button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #333;
+}
+
+.opcao-correta {
+  background: #c8f7c5;
+  border-color: #2e7d32;
+}
+
+.opcao-errada {
+  background: #ffcdd2;
+  border-color: #c62828;
 }
