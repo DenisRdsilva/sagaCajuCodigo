@@ -44,52 +44,78 @@ function criarOpcoes(desafio) {
 }
 
 function desafios(desafio) {
-    let criarDiv = $("<div>");
-    let numeroDesafio = $("<h1>", { text: `Desafio ${desafio.id}: ` });
+    let criarDivDialogo = $("<div>", { class: "caixa-pergunta" });
+    // let emissorDialogo = $("<h2>", { text: "Professora Luna:" });
+    let textoDialogo = $("<h2>", { text: desafio.dialogo });
+
+    // $(criarDivDialogo).append(emissorDialogo);
+    $(criarDivDialogo).append(textoDialogo);
+    $(".button-avanco").prop("disabled", false);
+
+    $(".button-avanco").on("click", function () {
+        $(".caixa-pergunta").remove();
+        $(".button-avanco").prop("disabled", true);
+        criarOpcoes(desafio);
+        $(".button-avanco").on("click", function () {
+            if (podeAvancar) {
+                $("main").empty();
+                introduzirDesafio(fase.desafios[indiceDesafio]);
+
+                // reset estado
+                podeAvancar = false;
+                $(this).prop("disabled", true);
+            }
+        });
+    });
+
+    $(".button-avanco").show();
+    $(".professora-imagem").show();
+
+    // $("main").append(criarDiv);
+    $("main").append(criarDivDialogo);
+}
+
+function introduzirDesafio(desafio) {
+    let criarDiv = $("<div>", { class: "caixa" });
+    let numeroDesafio = $("<h1>", { text: `Desafio ${desafio.id}:` });
     let nomeDesafio = $("<h2>", { text: `${desafio.titulo}` });
 
-    let criarDivDialogo = $("<div>", { class: "caixa-dialogo" });
-    let emissorDialogo = $("<h2>", { text: "Professora Luna:" });
-    let textoDialogo = $("<h2>", { text: desafio.dialogo });
+    // $(".button-avanco").hide();
 
     $(criarDiv).append(numeroDesafio);
     $(criarDiv).append(nomeDesafio);
 
-    $(criarDivDialogo).append(emissorDialogo);
-    $(criarDivDialogo).append(textoDialogo);
-
     $("main").append(criarDiv);
-    $("main").append(criarDivDialogo);
 
-    setTimeout(() => {
-        $(criarDivDialogo).remove();
-        criarOpcoes(desafio);
-    }, 3000);
+    $(".button-avanco").on("click", function () {
+        $(".caixa").remove();
+        desafios(desafio);
+    });
+
+    // setTimeout(() => {
+    //     $(criarDiv).remove();
+    //     desafios(desafio);
+    // }, 3000);
 }
 
 function mostrarTituloDesafio(fase) {
-    let criarDiv = $("<div>");
+    let criarDiv = $("<div>", { class: "caixa" });
     let criarDivActions = $("<div>", { class: "caixa-opcoes" });
     let numeroFase = $("<h1>", { text: `Fase ${fase.fase}: ` });
     let tituloFase = $("<h1>", { text: fase.nome });
     let criarRightBtn = $("<button>", {
         text: "Próximo desafio ->",
         class: "button-avanco",
-        disabled: true,
+        disabled: false,
     });
 
     $(criarRightBtn).on("click", function () {
-        if (podeAvancar) {
-            $("main").empty();
-            desafios(fase.desafios[indiceDesafio]);
-
-            // reset estado
-            podeAvancar = false;
-            $(this).prop("disabled", true);
-        }
+        $(".caixa").remove();
+        introduzirDesafio(fase.desafios[indiceDesafio]);
     });
 
     $(".professora-imagem").attr("src", "../assets/images/luna.png");
+    $(".professora-imagem").hide();
 
     $(criarDiv).append(numeroFase);
     $(criarDiv).append(tituloFase);
@@ -97,11 +123,6 @@ function mostrarTituloDesafio(fase) {
 
     $("main").append(criarDiv);
     $(".background").append(criarDivActions);
-
-    setTimeout(() => {
-        $(criarDiv).remove();
-        desafios(fase.desafios[indiceDesafio]);
-    }, 3000);
 }
 
 export function iniciarFase(fase) {
