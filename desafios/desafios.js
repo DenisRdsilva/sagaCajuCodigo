@@ -65,34 +65,103 @@ function arrastarItens(item) {
     });
 }
 
+function colisao(el1, el2) {
+    const r1 = el1.getBoundingClientRect();
+    const r2 = el2.getBoundingClientRect();
+
+    return !(
+        r1.top > r2.bottom ||
+        r1.right < r2.left ||
+        r1.bottom < r2.top ||
+        r1.left > r2.right
+    );
+}
+
+function primeiroDesafio() {
+    let quantidadeVermelhos = 0;
+    let quantidadeAmarelos = 0;
+
+    let cajuDiv = $("<div>", { class: "caju-img" });
+    let urnaDiv = $("<div>", { class: "urna-img" });
+    let contadorDiv = $("<div>", { class: "contador-cajus" });
+
+    for (let i = 0; i < 8; i++) {
+        const valor = Math.random() < 0.5;
+        if (valor) {
+            $(cajuDiv).append("<img class='caju vermelho' src='../assets/images/primeiro-desafio/caju-vermelho.png' alt='Caju Vermelho'>");
+        } else {
+            $(cajuDiv).append("<img class='caju amarelo' src='../assets/images/primeiro-desafio/caju-amarelo.png' alt='Caju Amarelo'>");
+        }
+    }
+
+    $(urnaDiv).append("<img class='urna vermelho' src='../assets/images/primeiro-desafio/caixa-vermelha.png' alt='Caixa Vermelha'>");
+    $(urnaDiv).append("<img class='urna amarelo' src='../assets/images/primeiro-desafio/caixa-amarela.png' alt='Caixa Amarela'>");
+
+    $(contadorDiv).append('<p>Vermelhos: <span class="count-vermelho">0</span></p>');
+    $(contadorDiv).append('<p>Amarelos: <span class="count-amarelo">0</span></p>');
+
+    $("main").append(cajuDiv);
+    $("main").append(urnaDiv);
+    $("main").append(contadorDiv);
+
+    let cajuPosition = (window.innerWidth / 2) - 240;
+
+    const cajus = document.querySelectorAll(".caju-img img");
+    const caixas = document.querySelectorAll(".urna-img img");
+    const contadores = document.querySelectorAll(".contador-cajus p");
+
+    cajus.forEach((caju, index) => {
+        $(caju).css({
+            left: cajuPosition + 60 * index + "px",
+        });
+
+        arrastarItens(caju);
+
+        $(caju).on("mouseup", function () { //Soltar na caixa
+            caixas.forEach((caixa) => {
+                if (colisao(caju, caixa)) {
+                    if ($(caju).hasClass("vermelho") && $(caixa).hasClass("vermelho")) {
+                        quantidadeVermelhos++;
+                        $(".count-vermelho").text(quantidadeVermelhos);
+                        $(caju).remove();
+                    }
+
+                    if ($(caju).hasClass("amarelo") && $(caixa).hasClass("amarelo")) {
+                        quantidadeAmarelos++;
+                        $(".count-amarelo").text(quantidadeAmarelos);
+                        $(caju).remove();
+                    }
+                } else {
+                    $(caju).css("border", "3px solid red");
+
+                    setTimeout(() => {
+                        $(caju).css("border", "none");
+                    }, 500);
+                }
+            });
+        });
+    });
+
+    caixas.forEach((caixa, index) => {
+        $(caixa).css({
+            left: cajuPosition + 240 * index + "px",
+        });
+    });
+
+    contadores.forEach((contador, index) => {
+        $(contador).css({
+            left: cajuPosition + 240 * index + "px",
+        })
+    })
+}
+
 function desafios(desafio) {
     let criarDivDialogo = $("<div>", { class: "caixa-pergunta" });
     let textoDialogo = $("<h2>", { text: desafio.dialogo });
 
     $(criarDivDialogo).append(textoDialogo);
 
-    let cajuDiv = $("<div>", { class: "caju-img" });
-
-    for (let i = 0; i < 8; i++) {
-        const valor = Math.random() < 0.5;
-        if (valor) {
-            $(cajuDiv).append("<img src='../assets/images/caju-vermelho.png' alt='Caju Vermelho'>");
-        } else {
-            $(cajuDiv).append("<img src='../assets/images/caju-amarelo.png' alt='Caju Amarelo'>");
-        }
-    }
-
-    $("main").append(cajuDiv);
-
-    let cajuPosition = (window.innerWidth / 2) - 240;
-
-    const cajus = document.querySelectorAll(".caju-img img");
-    cajus.forEach((caju, index) => {
-        $(caju).css({
-            left: cajuPosition + 60*index + "px",
-        });
-        arrastarItens(caju);
-    });
+    primeiroDesafio();
 
     $(".button-avanco")
         .prop("disabled", false)

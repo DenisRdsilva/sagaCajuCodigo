@@ -114,7 +114,8 @@ p.mensagem {
   z-index: 2;
 }
 
-.caixa-opcoes button {
+.caixa-opcoes button,
+.fase-button {
   width: 100%;
   max-width: 400px;
   background: #f4f4f0;
@@ -163,15 +164,32 @@ main .caixa-opcoes button {
 .caju-img img {
   display: flex;
   flex-wrap: wrap;
-}
-
-.caju-img img {
   width: 80px;
-  z-index: 3;
+  z-index: 4;
   position: absolute;
   cursor: grab;
+  bottom: 47.5%;
 }
 
 .caju-img img:active {
   cursor: grabbing;
+}
+
+.urna-img {
+  height: 300px;
+  display: flex;
+}
+
+.urna-img img {
+  width: 200px;
+  z-index: 3;
+  position: absolute;
+  bottom: 22.5%;
+}
+
+.contador-cajus p {
+  position: absolute;
+  z-index: 3;
+  width: 200px;
+  bottom: 17.5%;
 }
