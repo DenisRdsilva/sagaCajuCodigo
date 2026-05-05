@@ -130,6 +130,15 @@ p.mensagem {
   transition: all 0.15s ease;
 }
 
+main .caixa-opcoes button {
+  position: inherit
+}
+
+.caixa-opcoes button {
+  position: absolute;
+  bottom: 10%;
+}
+
 .caixa-opcoes button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 0 #333;
@@ -149,4 +158,20 @@ p.mensagem {
 .opcao-errada {
   background: #ffcdd2;
   border-color: #c62828;
+}
+
+.caju-img img {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.caju-img img {
+  width: 80px;
+  z-index: 3;
+  position: absolute;
+  cursor: grab;
+}
+
+.caju-img img:active {
+  cursor: grabbing;
 }

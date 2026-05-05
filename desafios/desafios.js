@@ -1,4 +1,5 @@
 let indiceDesafio = 0;
+let faseAtual;
 let podeAvancar = false;
 
 function checarOpcao(opcao, correta, acerto, erro) {
@@ -8,7 +9,6 @@ function checarOpcao(opcao, correta, acerto, erro) {
     if (opcao == correta) {
         mensagem = acerto;
         podeAvancar = true;
-        indiceDesafio++;
 
         $(".button-avanco").prop("disabled", false);
     } else {
@@ -16,7 +16,6 @@ function checarOpcao(opcao, correta, acerto, erro) {
         podeAvancar = false;
 
         $(".button-avanco").prop("disabled", true);
-
     }
 
     mensagem = $("<p>", { text: mensagem, class: "mensagem" });
@@ -29,12 +28,11 @@ function criarOpcoes(desafio) {
     let perguntaEl = $("<p>", { text: desafio.pergunta, class: "caixa-pergunta" });
     container.append(perguntaEl);
 
-    desafio.opcoes.forEach((opcao, index) => {
+    desafio.opcoes.forEach((opcao) => {
         let botao = $("<button>", {
             text: opcao,
             click: function () {
                 checarOpcao(opcao, desafio.correta, desafio.acerto, desafio.erro);
-                // console.log("Escolheu:", opcao);
             }
         });
         container.append(botao);
@@ -43,35 +41,95 @@ function criarOpcoes(desafio) {
     $("main").append(container);
 }
 
+function arrastarItens(item) {
+    let segurando = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    item.addEventListener("mousedown", (e) => {
+        segurando = true;
+
+        offsetX = e.clientX - item.offsetLeft;
+        offsetY = e.clientY - item.offsetTop;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!segurando) return;
+
+        item.style.left = (e.clientX - offsetX) + "px";
+        item.style.top = (e.clientY - offsetY) + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+        segurando = false;
+    });
+}
+
 function desafios(desafio) {
     let criarDivDialogo = $("<div>", { class: "caixa-pergunta" });
-    // let emissorDialogo = $("<h2>", { text: "Professora Luna:" });
     let textoDialogo = $("<h2>", { text: desafio.dialogo });
 
-    // $(criarDivDialogo).append(emissorDialogo);
     $(criarDivDialogo).append(textoDialogo);
-    $(".button-avanco").prop("disabled", false);
 
-    $(".button-avanco").on("click", function () {
-        $(".caixa-pergunta").remove();
-        $(".button-avanco").prop("disabled", true);
-        criarOpcoes(desafio);
-        $(".button-avanco").on("click", function () {
-            if (podeAvancar) {
-                $("main").empty();
-                introduzirDesafio(fase.desafios[indiceDesafio]);
+    let cajuDiv = $("<div>", { class: "caju-img" });
 
-                // reset estado
-                podeAvancar = false;
-                $(this).prop("disabled", true);
-            }
+    for (let i = 0; i < 8; i++) {
+        const valor = Math.random() < 0.5;
+        if (valor) {
+            $(cajuDiv).append("<img src='../assets/images/caju-vermelho.png' alt='Caju Vermelho'>");
+        } else {
+            $(cajuDiv).append("<img src='../assets/images/caju-amarelo.png' alt='Caju Amarelo'>");
+        }
+    }
+
+    $("main").append(cajuDiv);
+
+    let cajuPosition = (window.innerWidth / 2) - 240;
+
+    const cajus = document.querySelectorAll(".caju-img img");
+    cajus.forEach((caju, index) => {
+        $(caju).css({
+            left: cajuPosition + 60*index + "px",
         });
+        arrastarItens(caju);
     });
+
+    $(".button-avanco")
+        .prop("disabled", false)
+        .off("click")
+        .on("click", function () {
+
+            $(".caixa-pergunta").remove();
+            $(".button-avanco").prop("disabled", true);
+
+            criarOpcoes(desafio);
+
+            $(".button-avanco").off("click");
+
+            $(".button-avanco").on("click", function () {
+                if (podeAvancar) {
+                    $(".caixa").remove();
+                    $("main .caixa-opcoes").remove();
+
+                    indiceDesafio++;
+
+                    if (indiceDesafio >= faseAtual.desafios.length) {
+                        $("main").append("<h1>Fim da fase 🎉</h1>");
+                        $(".button-avanco").hide();
+                        return;
+                    }
+
+                    introduzirDesafio(faseAtual.desafios[indiceDesafio]);
+
+                    podeAvancar = false;
+                    $(this).prop("disabled", true);
+                }
+            });
+        });
 
     $(".button-avanco").show();
     $(".professora-imagem").show();
 
-    // $("main").append(criarDiv);
     $("main").append(criarDivDialogo);
 }
 
@@ -80,22 +138,19 @@ function introduzirDesafio(desafio) {
     let numeroDesafio = $("<h1>", { text: `Desafio ${desafio.id}:` });
     let nomeDesafio = $("<h2>", { text: `${desafio.titulo}` });
 
-    // $(".button-avanco").hide();
+    $(".button-avanco").hide();
 
     $(criarDiv).append(numeroDesafio);
     $(criarDiv).append(nomeDesafio);
 
     $("main").append(criarDiv);
 
-    $(".button-avanco").on("click", function () {
+    setTimeout(() => {
         $(".caixa").remove();
         desafios(desafio);
-    });
+    }, 3000);
 
-    // setTimeout(() => {
-    //     $(criarDiv).remove();
-    //     desafios(desafio);
-    // }, 3000);
+    $(".button-avanco").off("click");
 }
 
 function mostrarTituloDesafio(fase) {
@@ -126,6 +181,6 @@ function mostrarTituloDesafio(fase) {
 }
 
 export function iniciarFase(fase) {
-    mostrarTituloDesafio(fase);
+    faseAtual = fase;
+    mostrarTituloDesafio(faseAtual);
 }
-
