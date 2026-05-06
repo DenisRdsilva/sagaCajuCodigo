@@ -54,16 +54,25 @@ img.professora-imagem {
   z-index: 1;
 }
 
+img.feedback {
+  position: absolute;
+  max-height: 70vh;
+  height: auto;
+  top: 30%;
+  right: 5%;
+  z-index: 1;
+}
+
 .caixa {
   z-index: 2;
 }
 
-.caixa-pergunta {
+.caixa-pergunta,
+.caixa-dialogo {
   background: var(--text-color);
   color: var(--text-dialog-color);
   border-radius: 20px;
   padding: 20px;
-  width: 60%;
   max-width: 600px;
   border: 3px solid #333;
   box-shadow: 0 6px 0 #333;
@@ -71,7 +80,6 @@ img.professora-imagem {
   font-weight: 600;
   text-align: center;
   position: absolute;
-  bottom: 65%;
   z-index: 2;
 }
 
@@ -82,9 +90,10 @@ img.professora-imagem {
   margin-bottom: 10px;
 }
 
-.caixa-pergunta p {
+/* .caixa-pergunta p,
+.caixa-dialogo p {
   font-size: 1.1rem;
-}
+} */
 
 p.mensagem {
   z-index: 2;
@@ -94,11 +103,44 @@ p.mensagem {
   padding: 10px;
 }
 
+.caixa-madeira {
+    background: linear-gradient(
+        to bottom,
+        #a86a2a,
+        #8b5a2b,
+        #6f451f
+    );
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    font-weight: bold;
+    border: 3px solid #4a2c12;
+    border-radius: 12px;
+    padding: 20px 30px;
+    color: white;
+    font-family: var(--font-titulo);
+    text-align: center;
+    box-shadow:
+        0 6px 0 #3a220f,   /* sombra dura (efeito cartoon) */
+        inset 0 2px 4px rgba(255,255,255,0.2), /* brilho */
+        inset 0 -4px 6px rgba(0,0,0,0.4);     /* profundidade */
+}
+
 .caixa-pergunta::after {
   content: "";
   position: absolute;
   bottom: -20px;
   left: 40px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #f4f4f0 transparent transparent transparent;
+}
+
+.caixa-dialogo::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 40px;
   border-width: 10px;
   border-style: solid;
   border-color: #f4f4f0 transparent transparent transparent;
@@ -132,7 +174,7 @@ p.mensagem {
 }
 
 main .caixa-opcoes button {
-  position: inherit
+  position: inherit;
 }
 
 .caixa-opcoes button {

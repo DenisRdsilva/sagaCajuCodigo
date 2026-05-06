@@ -1,9 +1,9 @@
 import { iniciarFase } from "./desafios.js";
 
 const fase = {
-    fase: 1,
-    nome: "O Despertar no Cajueiro (1º e 2º Ano)",
-    desafios: [
+    "fase": 1,
+    "titulo": "O Despertar no Cajueiro (1º e 2º Ano)",
+    "desafios": [
         {
             "id": 1,
             "titulo": "Cores de Pirangi",
