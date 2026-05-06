@@ -15,6 +15,15 @@ body {
   margin: 0;
 }
 
+h1, h2 {
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000,
+    4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
 .background {
   display: flex;
   width: 100%;
@@ -104,26 +113,21 @@ p.mensagem {
 }
 
 .caixa-madeira {
-    background: linear-gradient(
-        to bottom,
-        #a86a2a,
-        #8b5a2b,
-        #6f451f
-    );
-    position: absolute;
-    top: 3%;
-    right: 3%;
-    font-weight: bold;
-    border: 3px solid #4a2c12;
-    border-radius: 12px;
-    padding: 20px 30px;
-    color: white;
-    font-family: var(--font-titulo);
-    text-align: center;
-    box-shadow:
-        0 6px 0 #3a220f,   /* sombra dura (efeito cartoon) */
-        inset 0 2px 4px rgba(255,255,255,0.2), /* brilho */
-        inset 0 -4px 6px rgba(0,0,0,0.4);     /* profundidade */
+  background: linear-gradient(to bottom, #a86a2a, #8b5a2b, #6f451f);
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  font-weight: bold;
+  border: 3px solid #4a2c12;
+  border-radius: 12px;
+  padding: 20px 30px;
+  color: white;
+  font-family: var(--font-titulo);
+  text-align: center;
+  box-shadow:
+    0 6px 0 #3a220f,
+    /* sombra dura (efeito cartoon) */ inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    /* brilho */ inset 0 -4px 6px rgba(0, 0, 0, 0.4); /* profundidade */
 }
 
 .caixa-pergunta::after {

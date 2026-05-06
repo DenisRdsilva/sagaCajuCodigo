@@ -282,6 +282,11 @@ function introduzirDesafio(desafio) {
 }
 
 function mostrarTituloDesafio(fase) {
+    $(".professora-imagem").attr("src", "../assets/images/luna.png");
+    $(".professora-imagem").hide();
+    $(".feedback").hide();
+    $(".caixa-madeira").hide();
+
     let criarDiv = $("<div>", { class: "caixa" });
     let criarDivActions = $("<div>", { class: "caixa-opcoes" });
     let numeroFase = $("<h1>", { text: `Fase ${fase.fase}: ` });
@@ -296,11 +301,6 @@ function mostrarTituloDesafio(fase) {
         $(".caixa").remove();
         introduzirDesafio(fase.desafios[indiceDesafio]);
     });
-
-    $(".professora-imagem").attr("src", "../assets/images/luna.png");
-    $(".professora-imagem").hide();
-    $(".feedback").hide();
-    $(".caixa-madeira").hide();
 
     $(criarDiv).append(numeroFase);
     $(criarDiv).append(tituloFase);
