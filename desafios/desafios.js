@@ -36,7 +36,7 @@ function checarOpcao(opcao, correta, acerto, erro) {
     if (opcao == correta) {
         mensagem = acerto;
         podeAvancar = true;
-        $(".feedback").attr("src", "../assets/images/orientador-eco.png");
+        $(".feedback").attr("src", "../assets/images/eco.png");
 
         $(".button-avanco").prop("disabled", false);
         $(".opcoes-container button").prop("disabled", true);
@@ -49,7 +49,7 @@ function checarOpcao(opcao, correta, acerto, erro) {
     } else {
         mensagem = erro;
         podeAvancar = false;
-        $(".feedback").attr("src", "../assets/images/programador-byte.png");
+        $(".feedback").attr("src", "../assets/images/byte.png");
 
         $(".button-avanco").prop("disabled", true);
     }
@@ -228,6 +228,7 @@ function desafios(desafio) {
                     $("main .caixa-opcoes").remove();
                     $(".caixa-dialogo").remove();
                     $(".professora-imagem").hide();
+                    $(".feedback").attr("src", "");
                     $(".feedback").hide();
 
                     indiceDesafio++;
@@ -256,7 +257,7 @@ function desafios(desafio) {
     $(".caixa-madeira").text(`Eco-Pontos: ${pontuacao}`).show();
 
     $("main").append(criarDivDialogo);
-
+    
     posicaoDialogo(".professora-imagem", ".caixa-pergunta");
 }
 
@@ -282,7 +283,11 @@ function introduzirDesafio(desafio) {
 }
 
 function mostrarTituloDesafio(fase) {
-    $(".professora-imagem").attr("src", "../assets/images/luna.png");
+    if (fase.fase !== 1) {
+        $(".professora-imagem").attr("src", "../assets/images/laura.png");
+    } else {
+        $(".professora-imagem").attr("src", "../assets/images/luna.png");
+    }
     $(".professora-imagem").hide();
     $(".feedback").hide();
     $(".caixa-madeira").hide();
