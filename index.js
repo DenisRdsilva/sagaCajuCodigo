@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         $(".fase1").click(function () {
             localStorage.setItem("faseSelecionada", "1");
-            window.location.href = "./fases/primeiraFase.html";
+            window.location.href = "./fases/intro.html";
         })
         $(".fase2").click(function () {
             localStorage.setItem("faseSelecionada", "2");

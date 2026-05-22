@@ -1,5 +1,3 @@
-import { iniciarFase } from "./desafios.js";
-
 const fase = {
     "fase": 1,
     "titulo": "O Despertar no Cajueiro (1º e 2º Ano)",
@@ -117,6 +115,6 @@ const fase = {
     ]
 }
 
-$(document).ready(function () {
+function iniciarPrimeiraFase() {
     iniciarFase(fase);
-});
+}

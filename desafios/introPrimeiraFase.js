@@ -191,7 +191,6 @@ function desafioCaju() {
         $(caju).css({
             left: cajuPosition + 60 * index + "px",
         });
-
         arrastarItens(caju);
 
         $(caju).on("mouseup", function () { //Soltar na caixa
@@ -210,11 +209,10 @@ function desafioCaju() {
                     }
                     if (quantidadeAmarelos === quantidadeAmarelosUrna && quantidadeVermelhos === quantidadeVermelhosUrna) {
                         indiceDialogo++;
-                        $(".fase-button.next-button").attr({ disabled: false });
                         $(".caju-img").remove();
                         $(".urna-img").remove();
                         $(".contador-cajus").remove();
-                        introDesafios();
+                        $(".fase-button.next-button").attr({ disabled: false });
                     }
                 } else {
                     $(caju).css("border", "3px solid red");
@@ -258,7 +256,7 @@ function mostrarDialogo(nomePersonagem, frase) {
     }
 }
 
-const introDesafios = () => {
+export const introDesafios = () => {
     let fase = localStorage.getItem("faseSelecionada");
     let texto = dialogos.at(indiceDialogo).frase;
 
@@ -303,7 +301,7 @@ const introDesafios = () => {
                 desafioCaju();
             }
         } else {
-
+            window.location.href = "./fases/primeiraFase.html";
         }
     });
 }
