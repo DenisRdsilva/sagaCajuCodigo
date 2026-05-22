@@ -11,7 +11,7 @@ $(document).ready(function () {
             localStorage.setItem("faseSelecionada", "2");
             window.location.href = "./fases/segundaFase.html";
         })
-        $(".fase1").click(function () {
+        $(".fase3").click(function () {
             localStorage.setItem("faseSelecionada", "3");
             window.location.href = "./fases/terceiraFase.html";
         })
