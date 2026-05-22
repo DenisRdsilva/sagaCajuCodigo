@@ -64,7 +64,7 @@ function checarOpcao(opcao, correta, acerto, erro) {
 function criarOpcoes(desafio) {
     let container = $("<div>", { class: "opcoes-container caixa-opcoes" });
 
-    let perguntaEl = $("<p>", { text: desafio.pergunta, class: "dialogo pergunta" });
+    let perguntaEl = $("<h2>", { text: desafio.pergunta, class: "dialogo pergunta" });
     container.append(perguntaEl);
 
     desafio.opcoes.forEach((opcao) => {
@@ -101,7 +101,7 @@ function desafios(desafio) {
         .off("click")
         .on("click", function () {
 
-            $(".dialogo .pergunta").remove();
+            $(".dialogo.pergunta").remove();
             $(".button-avanco").prop("disabled", true);
 
             criarOpcoes(desafio);
