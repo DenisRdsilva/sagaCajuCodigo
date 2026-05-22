@@ -32,7 +32,7 @@ function posicaoFeedback(imagem, caixa) {
 
 function checarOpcao(opcao, correta, acerto, erro) {
     let mensagem;
-    $(".caixa-dialogo").remove();
+    $(".dialogo.feedback").remove();
 
     if (opcao == correta) {
         mensagem = acerto;
@@ -56,15 +56,15 @@ function checarOpcao(opcao, correta, acerto, erro) {
 
     $(".feedback").show();
 
-    const feedback = $("<p>", { text: mensagem, class: "caixa-dialogo" });
+    const feedback = $("<h2>", { text: mensagem, class: "dialogo feedback" });
     $("main").append(feedback);
-    posicaoFeedback(".feedback", ".caixa-dialogo");
+    posicaoFeedback(".feedback", ".dialogo.feedback");
 }
 
 function criarOpcoes(desafio) {
     let container = $("<div>", { class: "opcoes-container caixa-opcoes" });
 
-    let perguntaEl = $("<p>", { text: desafio.pergunta, class: "caixa-pergunta" });
+    let perguntaEl = $("<p>", { text: desafio.pergunta, class: "dialogo pergunta" });
     container.append(perguntaEl);
 
     desafio.opcoes.forEach((opcao) => {
@@ -85,11 +85,11 @@ function criarOpcoes(desafio) {
     });
 
     $("main").append(container);
-    posicaoDialogo(".professora-imagem", ".caixa-pergunta");
+    posicaoDialogo(".professora-imagem", ".dialogo.pergunta");
 }
 
 function desafios(desafio) {
-    let criarDivDialogo = $("<div>", { class: "caixa-pergunta" });
+    let criarDivDialogo = $("<div>", { class: "dialogo pergunta" });
     let textoDialogo = $("<h2>", { text: desafio.dialogo });
 
     $(criarDivDialogo).append(textoDialogo);
@@ -101,7 +101,7 @@ function desafios(desafio) {
         .off("click")
         .on("click", function () {
 
-            $(".caixa-pergunta").remove();
+            $(".dialogo .pergunta").remove();
             $(".button-avanco").prop("disabled", true);
 
             criarOpcoes(desafio);
@@ -112,7 +112,7 @@ function desafios(desafio) {
                 if (podeAvancar) {
                     $(".caixa").remove();
                     $("main .caixa-opcoes").remove();
-                    $(".caixa-dialogo").remove();
+                    $(".dialogo").remove();
                     $(".professora-imagem").hide();
                     $(".feedback").attr("src", "");
                     $(".feedback").hide();
@@ -144,7 +144,7 @@ function desafios(desafio) {
 
     $("main").append(criarDivDialogo);
 
-    posicaoDialogo(".professora-imagem", ".caixa-pergunta");
+    posicaoDialogo(".professora-imagem", ".dialogo.pergunta");
 }
 
 function introduzirDesafio(desafio) {
