@@ -100,14 +100,10 @@ let indiceDialogo = 0;
 
 function posicaoDialogo(imagem, caixa) {
     const imgPosition = document.querySelector(imagem);
-    const rect = imgPosition.getBoundingClientRect();
-
-    // const top = rect.top;
-    const dialogoAltura = rect.right;
 
     $(caixa).css({
-        bottom: dialogoAltura + "px",
-        
+        top: -15 + "%",
+        bottom: "unset"
     });
 }
 
@@ -157,6 +153,8 @@ function proximoDialogo() {
 function desafioCaju() {
     let quantidadeVermelhos = 0;
     let quantidadeAmarelos = 0;
+    let quantidadeVermelhosUrna = 0;
+    let quantidadeAmarelosUrna = 0;
 
     let cajuDiv = $("<div>", { class: "caju-img" });
     let urnaDiv = $("<div>", { class: "urna-img" });
@@ -165,8 +163,10 @@ function desafioCaju() {
     for (let i = 0; i < 8; i++) {
         const valor = Math.random() < 0.5;
         if (valor) {
+            quantidadeVermelhos++;
             $(cajuDiv).append("<img class='caju vermelho' src='../assets/images/primeiro-desafio/caju-vermelho.png' alt='Caju Vermelho'>");
         } else {
+            quantidadeAmarelos++;
             $(cajuDiv).append("<img class='caju amarelo' src='../assets/images/primeiro-desafio/caju-amarelo.png' alt='Caju Amarelo'>");
         }
     }
@@ -198,15 +198,23 @@ function desafioCaju() {
             caixas.forEach((caixa) => {
                 if (colisao(caju, caixa)) {
                     if ($(caju).hasClass("vermelho") && $(caixa).hasClass("vermelho")) {
-                        quantidadeVermelhos++;
-                        $(".count-vermelho").text(quantidadeVermelhos);
+                        quantidadeVermelhosUrna++;
+                        $(".count-vermelho").text(quantidadeVermelhosUrna);
                         $(caju).remove();
                     }
 
                     if ($(caju).hasClass("amarelo") && $(caixa).hasClass("amarelo")) {
-                        quantidadeAmarelos++;
-                        $(".count-amarelo").text(quantidadeAmarelos);
+                        quantidadeAmarelosUrna++;
+                        $(".count-amarelo").text(quantidadeAmarelosUrna);
                         $(caju).remove();
+                    }
+                    if (quantidadeAmarelos === quantidadeAmarelosUrna && quantidadeVermelhos === quantidadeVermelhosUrna) {
+                        indiceDialogo++;
+                        $(".fase-button.next-button").attr({ disabled: false });
+                        $(".caju-img").remove();
+                        $(".urna-img").remove();
+                        $(".contador-cajus").remove();
+                        introDesafios();
                     }
                 } else {
                     $(caju).css("border", "3px solid red");
@@ -270,19 +278,15 @@ const introDesafios = () => {
     let imgByte = $("<img>", { class: "byte", src: "../assets/images/byte.png", alt: "Programador Byte" });
 
     $(".personagem.eco").append(imgEco);
-
     $(".personagem.professora").append(dialogoProf);
     $(".personagem.professora").append(imgProf);
-
     $(".personagem.byte").append(imgByte);
-
     $(".personagem.eco").append(dialogoEco);
     $(".personagem.byte").append(dialogoByte);
 
     posicaoDialogo(".personagem img.eco", ".eco-dialogo");
     posicaoDialogo(".personagem img.byte", ".byte-dialogo");
     posicaoDialogo(".personagem.professora img.prof", ".prof-dialogo");
-    // posicaoFeedback(".feedback", ".caixa-dialogo");
 
     $(".dialogo.eco-dialogo").hide();
     $(".dialogo.byte-dialogo").hide();
@@ -292,11 +296,10 @@ const introDesafios = () => {
             if (indiceDialogo != 8) {
                 proximoDialogo();
             } else {
-                $("img").hide();
-                $(".dialogo").hide();
-
+                $("img").remove();
+                $(".dialogo").remove();
                 $(".background").css({ backgroundSize: 200 + "%" });
-
+                $(".fase-button.next-button").attr({ disabled: true });
                 desafioCaju();
             }
         } else {

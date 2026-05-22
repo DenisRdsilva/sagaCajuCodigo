@@ -362,6 +362,7 @@ main .caixa-opcoes button {
 
 .dialogo.pergunta {
   width: 500px;
+
 }
 
 .dialogo.pergunta::after {
