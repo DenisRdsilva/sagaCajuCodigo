@@ -46,7 +46,6 @@ function checarOpcao(opcao, correta, acerto, erro) {
         $(".opcao-errada").css({ "background-color": "red" });
         pontuacao += 10;
         $(".caixa-madeira").text(`Eco-Pontos: ${pontuacao}`).show();
-
     } else {
         mensagem = erro;
         podeAvancar = false;

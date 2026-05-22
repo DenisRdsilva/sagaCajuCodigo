@@ -98,6 +98,19 @@ const dialogos = [
 
 let indiceDialogo = 0;
 
+function posicaoDialogo(imagem, caixa) {
+    const imgPosition = document.querySelector(imagem);
+    const rect = imgPosition.getBoundingClientRect();
+
+    // const top = rect.top;
+    const dialogoAltura = rect.right;
+
+    $(caixa).css({
+        bottom: dialogoAltura + "px",
+        
+    });
+}
+
 function arrastarItens(item) {
     let segurando = false;
     let offsetX = 0;
@@ -266,6 +279,11 @@ const introDesafios = () => {
     $(".personagem.eco").append(dialogoEco);
     $(".personagem.byte").append(dialogoByte);
 
+    posicaoDialogo(".personagem img.eco", ".eco-dialogo");
+    posicaoDialogo(".personagem img.byte", ".byte-dialogo");
+    posicaoDialogo(".personagem.professora img.prof", ".prof-dialogo");
+    // posicaoFeedback(".feedback", ".caixa-dialogo");
+
     $(".dialogo.eco-dialogo").hide();
     $(".dialogo.byte-dialogo").hide();
 
@@ -277,7 +295,7 @@ const introDesafios = () => {
                 $("img").hide();
                 $(".dialogo").hide();
 
-                $(".background").css({ backgroundSize : 200 + "%" });
+                $(".background").css({ backgroundSize: 200 + "%" });
 
                 desafioCaju();
             }
