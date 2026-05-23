@@ -15,6 +15,15 @@ body {
   margin: 0;
 }
 
+.overlay-preto {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
 h1,
 h2 {
   text-shadow:
@@ -36,6 +45,7 @@ h2 {
   background-size: cover;
   background-position: center;
   position: relative;
+  z-index: 0;
   overflow: hidden;
 }
 
@@ -150,7 +160,6 @@ img.professora-imagem {
 img.professora-imagem.laura {
   max-height: 80vh;
   transform: scaleX(-1);
-  /* left: 8%; */
 }
 
 img.feedback {
@@ -263,6 +272,11 @@ main .caixa-opcoes button {
   border-color: #c62828;
 }
 
+.caju-img {
+  position: relative;
+  left: -52.5%;
+}
+
 .caju-img img {
   display: flex;
   flex-wrap: wrap;
@@ -270,7 +284,6 @@ main .caixa-opcoes button {
   z-index: 4;
   position: absolute;
   cursor: grab;
-  bottom: 47.5%;
 }
 
 .caju-img img:active {
@@ -332,9 +345,13 @@ main .caixa-opcoes button {
   transform: translateY(20px) scaleX(-1);
 }
 
+.prof.luna {
+  position: relative;
+  bottom: -50px;
+}
+
 .personagem.professora {
   z-index: 2;
-  /* position: absolute; */
   bottom: -70px;
   transform: scale(1.2);
 }
@@ -368,7 +385,6 @@ main .caixa-opcoes button {
 
 .dialogo.pergunta {
   width: 500px;
-
 }
 
 .dialogo.pergunta::after {

@@ -94,15 +94,13 @@ const dialogos = [
         "nome": "professora",
         "frase": "Vamos começar o primeiro desafio."
     }
-]
+];
 
 let indiceDialogo = 0;
 
 function posicaoDialogo(imagem, caixa) {
-    const imgPosition = document.querySelector(imagem);
-
     $(caixa).css({
-        top: -15 + "%",
+        top: "-15%",
         bottom: "unset"
     });
 }
@@ -145,7 +143,10 @@ function colisao(el1, el2) {
 
 function proximoDialogo() {
     indiceDialogo++;
+
     const dialogo = dialogos.at(indiceDialogo);
+
+    if (!dialogo) return;
 
     mostrarDialogo(dialogo.nome, dialogo.frase);
 }
@@ -153,8 +154,24 @@ function proximoDialogo() {
 function desafioCaju() {
     let quantidadeVermelhos = 0;
     let quantidadeAmarelos = 0;
+
     let quantidadeVermelhosUrna = 0;
     let quantidadeAmarelosUrna = 0;
+
+    $('.eco').hide();
+    $('.prof').hide();
+    $('.byte').hide();
+
+    $(".background").css({
+        backgroundImage: 'url("../assets/images/primeiro-desafio/fundo1.png")',
+        backgroundPosition: "bottom",
+    });
+
+    const overlay = $("<div>", {
+        class: "overlay-preto"
+    });
+
+    $("main").append(overlay);
 
     let cajuDiv = $("<div>", { class: "caju-img" });
     let urnaDiv = $("<div>", { class: "urna-img" });
@@ -162,20 +179,53 @@ function desafioCaju() {
 
     for (let i = 0; i < 8; i++) {
         const valor = Math.random() < 0.5;
+
         if (valor) {
             quantidadeVermelhos++;
-            $(cajuDiv).append("<img class='caju vermelho' src='../assets/images/primeiro-desafio/caju-vermelho.png' alt='Caju Vermelho'>");
+
+            $(cajuDiv).append(`
+                <img 
+                    class="caju vermelho"
+                    src="../assets/images/primeiro-desafio/caju-vermelho.png"
+                    alt="Caju Vermelho"
+                >
+            `);
         } else {
             quantidadeAmarelos++;
-            $(cajuDiv).append("<img class='caju amarelo' src='../assets/images/primeiro-desafio/caju-amarelo.png' alt='Caju Amarelo'>");
+
+            $(cajuDiv).append(`
+                <img 
+                    class="caju amarelo"
+                    src="../assets/images/primeiro-desafio/caju-amarelo.png"
+                    alt="Caju Amarelo"
+                >
+            `);
         }
     }
 
-    $(urnaDiv).append("<img class='urna vermelho' src='../assets/images/primeiro-desafio/caixa-vermelha.png' alt='Caixa Vermelha'>");
-    $(urnaDiv).append("<img class='urna amarelo' src='../assets/images/primeiro-desafio/caixa-amarela.png' alt='Caixa Amarela'>");
+    $(urnaDiv).append(`
+        <img 
+            class="urna vermelho"
+            src="../assets/images/primeiro-desafio/caixa-vermelha.png"
+            alt="Caixa Vermelha"
+        >
+    `);
 
-    $(contadorDiv).append('<p>Vermelhos: <span class="count-vermelho">0</span></p>');
-    $(contadorDiv).append('<p>Amarelos: <span class="count-amarelo">0</span></p>');
+    $(urnaDiv).append(`
+        <img 
+            class="urna amarelo"
+            src="../assets/images/primeiro-desafio/caixa-amarela.png"
+            alt="Caixa Amarela"
+        >
+    `);
+
+    $(contadorDiv).append(`
+        <p>Vermelhos: <span class="count-vermelho">0</span></p>
+    `);
+
+    $(contadorDiv).append(`
+        <p>Amarelos: <span class="count-amarelo">0</span></p>
+    `);
 
     $("main").append(cajuDiv);
     $("main").append(urnaDiv);
@@ -189,53 +239,83 @@ function desafioCaju() {
 
     cajus.forEach((caju, index) => {
         $(caju).css({
-            left: cajuPosition + 60 * index + "px",
+            left: cajuPosition + (70 * index) + "px"
         });
+
         arrastarItens(caju);
 
-        $(caju).on("mouseup", function () { //Soltar na caixa
+        $(caju).on("mouseup", function () {
+            let acertou = false;
+
             caixas.forEach((caixa) => {
                 if (colisao(caju, caixa)) {
-                    if ($(caju).hasClass("vermelho") && $(caixa).hasClass("vermelho")) {
+                    if (
+                        $(caju).hasClass("vermelho") &&
+                        $(caixa).hasClass("vermelho")
+                    ) {
                         quantidadeVermelhosUrna++;
+
                         $(".count-vermelho").text(quantidadeVermelhosUrna);
                         $(caju).remove();
+                        acertou = true;
                     }
 
-                    if ($(caju).hasClass("amarelo") && $(caixa).hasClass("amarelo")) {
+                    if (
+                        $(caju).hasClass("amarelo") &&
+                        $(caixa).hasClass("amarelo")
+                    ) {
                         quantidadeAmarelosUrna++;
+
                         $(".count-amarelo").text(quantidadeAmarelosUrna);
                         $(caju).remove();
+                        acertou = true;
                     }
-                    if (quantidadeAmarelos === quantidadeAmarelosUrna && quantidadeVermelhos === quantidadeVermelhosUrna) {
-                        indiceDialogo++;
-                        $(".caju-img").remove();
-                        $(".urna-img").remove();
-                        $(".contador-cajus").remove();
-                        $(".fase-button.next-button").attr({ disabled: false });
-                    }
-                } else {
-                    $(caju).css("border", "3px solid red");
-
-                    setTimeout(() => {
-                        $(caju).css("border", "none");
-                    }, 500);
                 }
             });
+
+            if (!acertou) {
+                $(caju).css("border", "3px solid red");
+
+                setTimeout(() => {
+                    $(caju).css("border", "none");
+                }, 500);
+            }
+
+            if (
+                quantidadeAmarelos === quantidadeAmarelosUrna &&
+                quantidadeVermelhos === quantidadeVermelhosUrna
+            ) {
+
+                $(".caju-img").remove();
+                $(".urna-img").remove();
+                $(".contador-cajus").remove();
+
+                $(".overlay-preto").remove();
+
+                $(".dialogo").hide();
+
+                $('.eco').show();
+                $('.prof').show();
+                $('.byte').show();
+
+                $(".fase-button.next-button").show();
+
+                proximoDialogo();
+            }
         });
     });
 
     caixas.forEach((caixa, index) => {
         $(caixa).css({
-            left: cajuPosition + 240 * index + "px",
+            left: cajuPosition + (240 * index) + "px"
         });
     });
 
     contadores.forEach((contador, index) => {
         $(contador).css({
-            left: cajuPosition + 240 * index + "px",
-        })
-    })
+            left: cajuPosition + (240 * index) + "px"
+        });
+    });
 }
 
 function mostrarDialogo(nomePersonagem, frase) {
@@ -243,15 +323,21 @@ function mostrarDialogo(nomePersonagem, frase) {
 
     switch (nomePersonagem) {
         case "professora":
-            $(".prof-dialogo").text(frase).show();
+            $(".prof-dialogo")
+                .text(frase)
+                .show();
             break;
 
         case "eco":
-            $(".eco-dialogo").text(frase).show();
+            $(".eco-dialogo")
+                .text(frase)
+                .show();
             break;
 
         case "byte":
-            $(".byte-dialogo").text(frase).show();
+            $(".byte-dialogo")
+                .text(frase)
+                .show();
             break;
     }
 }
@@ -260,25 +346,57 @@ export const introDesafios = () => {
     let fase = localStorage.getItem("faseSelecionada");
     let texto = dialogos.at(indiceDialogo).frase;
 
-    let dialogoEco = $("<div>", { class: "dialogo eco-dialogo" });
-    let dialogoProf = $("<div>", { class: "dialogo prof-dialogo", text: texto });
-    let dialogoByte = $("<div>", { class: "dialogo byte-dialogo" });
+    let dialogoEco = $("<div>", {
+        class: "dialogo eco-dialogo"
+    });
 
-    let imgEco = $("<img>", { class: "eco", src: "../assets/images/eco.png", alt: "Orientador Eco" });
+    let dialogoProf = $("<div>", {
+        class: "dialogo prof-dialogo",
+        text: texto
+    });
+
+    let dialogoByte = $("<div>", {
+        class: "dialogo byte-dialogo"
+    });
+
+    let imgEco = $("<img>", {
+        class: "eco",
+        src: "../assets/images/eco.png",
+        alt: "Orientador Eco"
+    });
+
     let imgProf;
+
     if (fase == "1") {
-        imgProf = $("<img>", { class: "prof", src: "../assets/images/luna.png", alt: "Professora Luna" });
-        dialogos.at(2).frase = dialogos.at(2).frase + "Luna."
+        imgProf = $("<img>", {
+            class: "prof luna",
+            src: "../assets/images/luna.png",
+            alt: "Professora Luna"
+        });
+
+        dialogos.at(2).frase = "Eu sou a Professora Luna.";
     } else {
-        imgProf = $("<img>", { class: "prof", src: "../assets/images/laura.png", alt: "Professora Laura" });
-        dialogos.at(2).frase = dialogos.at(2).frase + "Laura."
+        imgProf = $("<img>", {
+            class: "prof laura",
+            src: "../assets/images/laura.png",
+            alt: "Professora Laura"
+        });
+
+        dialogos.at(2).frase = "Eu sou a Professora Laura.";
     }
-    let imgByte = $("<img>", { class: "byte", src: "../assets/images/byte.png", alt: "Programador Byte" });
+
+    let imgByte = $("<img>", {
+        class: "byte",
+        src: "../assets/images/byte.png",
+        alt: "Programador Byte"
+    });
 
     $(".personagem.eco").append(imgEco);
     $(".personagem.professora").append(dialogoProf);
     $(".personagem.professora").append(imgProf);
+
     $(".personagem.byte").append(imgByte);
+
     $(".personagem.eco").append(dialogoEco);
     $(".personagem.byte").append(dialogoByte);
 
@@ -294,17 +412,15 @@ export const introDesafios = () => {
             if (indiceDialogo != 8) {
                 proximoDialogo();
             } else {
-                $("img").remove();
-                $(".dialogo").remove();
-                $(".background").css({ backgroundSize: 200 + "%" });
-                $(".fase-button.next-button").attr({ disabled: true });
+                $(".dialogo").hide();
+                $(".fase-button.next-button").hide();
                 desafioCaju();
             }
         } else {
-            window.location.href = "./fases/primeiraFase.html";
+            window.location.href = "./primeiraFase.html";
         }
     });
-}
+};
 
 $(document).ready(function () {
     introDesafios();
