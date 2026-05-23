@@ -2,97 +2,116 @@ const dialogos = [
     {
         "id": 1,
         "nome": "professora",
-        "frase": "Olá! Seja bem-vindo(a) ao Cajueiro de Pirangi, o maior cajueiro do mundo!"
+        "frase": "Olá! Seja bem-vindo(a) ao Cajueiro de Pirangi, o maior cajueiro do mundo!",
+        "botao": ["Continuar"]
     },
     {
         "id": 2,
         "nome": "professora",
-        "frase": "Aqui, cada galho, castanha e raiz escondem desafios, mistérios e muitas descobertas."
+        "frase": "Aqui, cada galho, castanha e raiz escondem desafios, mistérios e muitas descobertas.",
+        "botao": ["Continuar"]
     },
     {
         "id": 3,
         "nome": "professora",
-        "frase": "Eu sou a Professora "
+        "frase": "Eu sou a Professora ",
+        "botao": ["Continuar"]
     },
     {
         "id": 4,
         "nome": "eco",
-        "frase": "Eu sou o Orientador Eco."
+        "frase": "Eu sou o Orientador Eco.",
+        "botao": ["Continuar"]
     },
     {
         "id": 5,
         "nome": "byte",
-        "frase": "E eu sou o Programador Byte."
+        "frase": "E eu sou o Programador Byte.",
+        "botao": ["Continuar"]
     },
     {
         "id": 6,
         "nome": "professora",
-        "frase": "Hoje estamos com um pequeno problema..."
+        "frase": "Hoje estamos com um pequeno problema...",
+        "botao": ["Continuar"]
     },
     {
         "id": 7,
         "nome": "eco",
-        "frase": "Os cajus estão caindo por toda parte! Temos que pegá-los antes que estraguem."
+        "frase": "Os cajus estão caindo por toda parte! Temos que pegá-los antes que estraguem.",
+        "botao": ["Continuar"]
     },
     {
         "id": 8,
         "nome": "eco",
-        "frase": "Você pode nos ajudar pondo cada caju na caixa certa?"
+        "frase": "Você pode nos ajudar pondo cada caju na caixa certa?",
+        "botao": ["Vamos lá!"]
     },
     {
         "id": 9,
         "nome": "professora",
-        "frase": "Os cajus vermelhos vão na caixa vermelha e os amarelos na caixa amarela!"
+        "frase": "Os cajus vermelhos vão na caixa vermelha e os amarelos na caixa amarela!",
+        "botao": ["Continuar"]
     },
     {
         "id": 10,
         "nome": "eco",
-        "frase": "Incrível! Você ajudou a salvar nossa colheita!"
+        "frase": "Incrível! Você ajudou a salvar nossa colheita!",
+        "botao": ["Continuar"]
     },
     {
         "id": 11,
         "nome": "eco",
-        "frase": "Cada boa ação ajuda o Cajueiro a continuar vivo e saudável."
+        "frase": "Cada boa ação ajuda o Cajueiro a continuar vivo e saudável.",
+        "botao": ["Continuar"]
     },
     {
         "id": 12,
         "nome": "byte",
-        "frase": "UAU... você foi muito rápido(a)!"
+        "frase": "UAU... você foi muito rápido(a)!",
+        "botao": ["Continuar"]
     },
     {
         "id": 13,
         "nome": "byte",
-        "frase": "Sabia que organizar cajus também é uma forma de pensar como programador?"
+        "frase": "Sabia que organizar cajus também é uma forma de pensar como programador?",
+        "botao": ["Continuar"]
     },
     {
         "id": 14,
         "nome": "byte",
-        "frase": "Na computação, organizamos informações, seguimos padrões e resolvemos problemas."
+        "frase": "Na computação, organizamos informações, seguimos padrões e resolvemos problemas.",
+        "botao": ["Continuar"]
     },
     {
         "id": 15,
         "nome": "professora",
-        "frase": "Aliás, você bem que podia nos ajudar um pouco mais. Que tal?"
+        "frase": "Aliás, você bem que podia nos ajudar um pouco mais. Que tal?",
+        "botao": ["Vamos!", "Bora!"]
     },
     {
         "id": 16,
         "nome": "professora",
-        "frase": "ÓTIMO! Sabia que você nos ajudaria!"
+        "frase": "ÓTIMO! Sabia que você nos ajudaria!",
+        "botao": ["Continuar"]
     },
     {
         "id": 17,
         "nome": "byte",
-        "frase": "Prepare-se, você vai encarar desafios de lógica, padrões, sequências e pensamento computacional!"
+        "frase": "Prepare-se, você vai encarar desafios de lógica, padrões, sequências e pensamento computacional!",
+        "botao": ["Continuar"]
     },
     {
         "id": 18,
         "nome": "eco",
-        "frase": "E cada desafio completado, você ganha Eco-Pontos!"
+        "frase": "E cada desafio completado, você ganha Eco-Pontos!",
+        "botao": ["Continuar"]
     },
     {
         "id": 19,
         "nome": "professora",
-        "frase": "Vamos começar o primeiro desafio."
+        "frase": "Vamos começar o primeiro desafio.",
+        "botao": ["Continuar"]
     }
 ];
 
@@ -342,7 +361,7 @@ function mostrarDialogo(nomePersonagem, frase) {
     }
 }
 
-export const introDesafios = () => {
+const introDesafios = () => {
     let fase = localStorage.getItem("faseSelecionada");
     let texto = dialogos.at(indiceDialogo).frase;
 
